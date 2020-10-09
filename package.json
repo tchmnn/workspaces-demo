@@ -1,0 +1,16 @@
+{
+  "name": "workspaces-demo",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "backend": "yarn workspace @workspaces-demo/backend",
+    "common": "yarn workspace @workspaces-demo/common",
+    "backend:dev": "yarn backend dev"
+  },
+  "devDependencies": {
+    "typescript": "^4.0.3",
+    "yarn": "^1.22.10"
+  }
+}
