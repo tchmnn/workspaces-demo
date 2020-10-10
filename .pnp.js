@@ -309,13 +309,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/koa-bodyparser", "npm:4.3.0"],
             ["@types/koa-router", "npm:7.4.1"],
             ["@types/node", "npm:14.11.5"],
+            ["@types/uuid", "npm:8.3.0"],
             ["@workspaces-demo/common", "workspace:packages/common"],
             ["concurrently", "npm:5.3.0"],
             ["koa", "npm:2.13.0"],
             ["koa-bodyparser", "npm:4.3.0"],
             ["koa-router", "npm:9.4.0"],
             ["nodemon", "npm:2.0.4"],
-            ["typescript", "patch:typescript@npm%3A4.0.3#builtin<compat/typescript>::version=4.0.3&hash=5bf698"]
+            ["typescript", "patch:typescript@npm%3A4.0.3#builtin<compat/typescript>::version=4.0.3&hash=5bf698"],
+            ["uuid", "npm:8.3.1"]
           ],
           "linkType": "SOFT",
         }]
