@@ -27,6 +27,10 @@ class TodoService {
   getTodo (id: string) {
     return this.todos[id];
   }
+
+  getAllTodos (): Todo[] {
+    return Object.values(this.todos);
+  }
 }
 
 export default TodoService;
