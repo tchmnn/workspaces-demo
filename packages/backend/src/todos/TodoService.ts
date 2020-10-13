@@ -20,11 +20,11 @@ class TodoService {
     return created;
   }
 
-  deleteTodo (id: string) {
+  deleteTodo (id: string): void {
     delete this.todos[id];
   }
 
-  getTodo (id: string) {
+  getTodo (id: string): Todo {
     return this.todos[id];
   }
 
