@@ -72,6 +72,18 @@ const createDetailPatchHandler = (todoService: TodoService) =>
     ctx.body = updated;
   }
 
+const createDetailDeleteHandler = (todoService: TodoService) =>
+  (ctx: RouterContext) => {
+    const { id } = ctx.params;
+    if (!todoService.getTodo(id)) {
+      ctx.status = 404;
+      return;
+    }
+
+    todoService.deleteTodo(id);
+    ctx.status = 200;
+  }
+
 const createTodoRouter = (todoService: TodoService): Router => {
   const router = new Router();
   router.use(bodyParser());
@@ -81,7 +93,7 @@ const createTodoRouter = (todoService: TodoService): Router => {
 
   router.get('/todos/:id', createDetailGetHandler(todoService));
   router.patch('/todos/:id', createDetailPatchHandler(todoService));
-  // router.delete('/todos/:id', createDetailDeleteHandler(todoService));
+  router.delete('/todos/:id', createDetailDeleteHandler(todoService));
 
   return router;
 }
