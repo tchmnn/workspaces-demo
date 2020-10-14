@@ -228,6 +228,7 @@ __metadata:
     "@types/node": ^14.11.5
     "@types/uuid": ^8.3.0
     "@workspaces-demo/common": "workspace:*"
+    ajv: ^6.12.6
     concurrently: ^5.3.0
     koa: ^2.13.0
     koa-bodyparser: ^4.3.0
@@ -274,6 +275,18 @@ __metadata:
     json-schema-traverse: ^0.4.1
     uri-js: ^4.2.2
   checksum: d9ec559bd71be2479b91d293a5b14c96d60ba89f471d8b3369443830b6c72954bdc38f480194413f45f46fc250c8bd769275584ffde033aeb3c56cc218868d95
+  languageName: node
+  linkType: hard
+
+"ajv@npm:^6.12.6":
+  version: 6.12.6
+  resolution: "ajv@npm:6.12.6"
+  dependencies:
+    fast-deep-equal: ^3.1.1
+    fast-json-stable-stringify: ^2.0.0
+    json-schema-traverse: ^0.4.1
+    uri-js: ^4.2.2
+  checksum: 19a8f3b0a06001eb68e6268f4f9f04424b32baadd5df6ba8292cd473e22e5f4019ed9ab17c3e3510394178ed8bef9b42ad0bdb5c675d65f042421a774780ce1a
   languageName: node
   linkType: hard
 

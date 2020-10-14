@@ -311,6 +311,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:14.11.5"],
             ["@types/uuid", "npm:8.3.0"],
             ["@workspaces-demo/common", "workspace:packages/common"],
+            ["ajv", "npm:6.12.6"],
             ["concurrently", "npm:5.3.0"],
             ["koa", "npm:2.13.0"],
             ["koa-bodyparser", "npm:4.3.0"],
@@ -359,6 +360,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/ajv-npm-6.12.5-15b6d1a59d-d9ec559bd7.zip/node_modules/ajv/",
           "packageDependencies": [
             ["ajv", "npm:6.12.5"],
+            ["fast-deep-equal", "npm:3.1.3"],
+            ["fast-json-stable-stringify", "npm:2.1.0"],
+            ["json-schema-traverse", "npm:0.4.1"],
+            ["uri-js", "npm:4.4.0"]
+          ],
+          "linkType": "HARD",
+        }],
+        ["npm:6.12.6", {
+          "packageLocation": "./.yarn/cache/ajv-npm-6.12.6-4b5105e2b2-19a8f3b0a0.zip/node_modules/ajv/",
+          "packageDependencies": [
+            ["ajv", "npm:6.12.6"],
             ["fast-deep-equal", "npm:3.1.3"],
             ["fast-json-stable-stringify", "npm:2.1.0"],
             ["json-schema-traverse", "npm:0.4.1"],
