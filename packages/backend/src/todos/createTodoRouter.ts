@@ -1,12 +1,12 @@
 
-import Router, { RouterContext } from 'koa-router';
-import TodoService from './TodoService';
 import { Context, Next } from 'koa';
+import Router, { RouterContext } from 'koa-router';
 import bodyParser from 'koa-bodyparser';
 import Ajv from 'ajv';
+import { Todo } from '@workspaces-demo/common';
 import patchSchema from './schemas/patch-todo-schema.json';
 import postSchema from './schemas/post-todo-schema.json';
-import { Todo } from '@workspaces-demo/common';
+import TodoService from './TodoService';
 
 const ajv = new Ajv();
 
@@ -72,6 +72,18 @@ const createDetailPatchHandler = (todoService: TodoService) =>
     ctx.body = updated;
   }
 
+const createDetailDeleteHandler = (todoService: TodoService) =>
+  (ctx: RouterContext) => {
+    const { id } = ctx.params;
+    if (!todoService.getTodo(id)) {
+      ctx.status = 404;
+      return;
+    }
+
+    todoService.deleteTodo(id);
+    ctx.status = 200;
+  }
+
 const createTodoRouter = (todoService: TodoService): Router => {
   const router = new Router();
   router.use(bodyParser());
@@ -81,7 +93,7 @@ const createTodoRouter = (todoService: TodoService): Router => {
 
   router.get('/todos/:id', createDetailGetHandler(todoService));
   router.patch('/todos/:id', createDetailPatchHandler(todoService));
-  // router.delete('/todos/:id', createDetailDeleteHandler(todoService));
+  router.delete('/todos/:id', createDetailDeleteHandler(todoService));
 
   return router;
 }
