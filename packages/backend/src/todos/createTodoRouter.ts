@@ -1,12 +1,12 @@
 
-import Router, { RouterContext } from 'koa-router';
-import TodoService from './TodoService';
 import { Context, Next } from 'koa';
+import Router, { RouterContext } from 'koa-router';
 import bodyParser from 'koa-bodyparser';
 import Ajv from 'ajv';
+import { Todo } from '@workspaces-demo/common';
 import patchSchema from './schemas/patch-todo-schema.json';
 import postSchema from './schemas/post-todo-schema.json';
-import { Todo } from '@workspaces-demo/common';
+import TodoService from './TodoService';
 
 const ajv = new Ajv();
 
