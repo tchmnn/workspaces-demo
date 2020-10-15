@@ -1,4 +1,4 @@
 .yarn/
 build/
 dist/
-tsconfig.tsbuildinfo
+tsconfig.tsbuildinfo.pnp.js
