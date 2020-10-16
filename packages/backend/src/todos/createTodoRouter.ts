@@ -16,20 +16,6 @@ const createGetHandler = (todoService: TodoService) =>
     ctx.body = todoService.getAllTodos();
   }
 
-
-const createDetailGetHandler = (todoService: TodoService) =>
-  (ctx: RouterContext, _next: Next) => {
-    const todo = todoService.getTodo(ctx.params.id);
-
-    if (!todo) {
-      ctx.status = 404;
-      return;
-    }
-
-    ctx.status = 200;
-    ctx.body = todo;
-  }
-
 const validatePost = ajv.compile(postSchema);
 const createPostHandler = (todoService: TodoService) =>
   (ctx: Context, _next: Next) => {
@@ -47,15 +33,26 @@ const createPostHandler = (todoService: TodoService) =>
     ctx.body = todo;
   }
 
-const validatePatch = ajv.compile(patchSchema);
-const createDetailPatchHandler = (todoService: TodoService) =>
-  (ctx: Context) => {
-    const { id } = ctx.params;
-    if (!todoService.getTodo(id)) {
+// TODO: proper types
+type Getter<T, U = string> = (id: U) => T;
+
+const makeExistsOr404 = <T>(key: string, getter: Getter<T>) =>
+  async (ctx: RouterContext, next: Next) => {
+    const obj = getter(ctx.params.id)
+
+    if (!obj) {
       ctx.status = 404;
       return;
     }
 
+    ctx.state[key] = obj;
+    await next();
+  }
+
+const validatePatch = ajv.compile(patchSchema);
+const createDetailPatchHandler = (todoService: TodoService) =>
+  (ctx: Context) => {
+    const { id } = ctx.params;
     const { body } = ctx.request;
     const valid = validatePatch(body);
     
@@ -71,28 +68,30 @@ const createDetailPatchHandler = (todoService: TodoService) =>
     ctx.body = updated;
   }
 
+const createDetailGetHandler = (_todoService: TodoService) =>
+  (ctx: RouterContext, _next: Next) => {
+    ctx.status = 200;
+    ctx.body = ctx.state.todo;
+  }
+
 const createDetailDeleteHandler = (todoService: TodoService) =>
   (ctx: RouterContext) => {
     const { id } = ctx.params;
-    if (!todoService.getTodo(id)) {
-      ctx.status = 404;
-      return;
-    }
-
     todoService.deleteTodo(id);
     ctx.status = 200;
   }
 
 const createTodoRouter = (todoService: TodoService): Router => {
   const router = new Router();
+  const todoExistsOr404 = makeExistsOr404<Todo>("todo", id => todoService.getTodo(id));
   router.use(bodyParser());
 
   router.get('/todos', createGetHandler(todoService));
   router.post('/todos', createPostHandler(todoService));
 
-  router.get('/todos/:id', createDetailGetHandler(todoService));
-  router.patch('/todos/:id', createDetailPatchHandler(todoService));
-  router.delete('/todos/:id', createDetailDeleteHandler(todoService));
+  router.get('/todos/:id', todoExistsOr404, createDetailGetHandler(todoService));
+  router.patch('/todos/:id', todoExistsOr404, createDetailPatchHandler(todoService));
+  router.delete('/todos/:id', todoExistsOr404, createDetailDeleteHandler(todoService));
 
   return router;
 }
