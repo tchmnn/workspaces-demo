@@ -19,7 +19,6 @@ const createGetHandler = (todoService: TodoService) =>
 
 const createDetailGetHandler = (todoService: TodoService) =>
   (ctx: RouterContext, _next: Next) => {
-    ctx.status = 200;
     const todo = todoService.getTodo(ctx.params.id);
 
     if (!todo) {
